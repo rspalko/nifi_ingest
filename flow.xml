@@ -1,0 +1,2264 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flowController encoding-version="1.0">
+  <maxTimerDrivenThreadCount>10</maxTimerDrivenThreadCount>
+  <maxEventDrivenThreadCount>5</maxEventDrivenThreadCount>
+  <rootGroup>
+    <id>4a69e635-0157-1000-db40-048adbfa88e2</id>
+    <name>NiFi Flow</name>
+    <position x="0.0" y="0.0"/>
+    <comment/>
+    <processGroup>
+      <id>07bdcf92-0158-1000-5d49-6c1d582ad17c</id>
+      <name>Imagery Ingest</name>
+      <position x="2479.5499972321786" y="443.4276497192368"/>
+      <comment/>
+      <processor>
+        <id>01581005-b129-1429-0f2d-ae7bdc464f72</id>
+        <name>LogAttribute</name>
+        <position x="988.5805969891962" y="1374.481650372276"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <processor>
+        <id>8a084144-0158-1000-2882-e5235518a188</id>
+        <name>Write Metadata To Flow FIle</name>
+        <position x="1014.9348485424332" y="301.26355709621606"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ReplaceText</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Regular Expression</name>
+          <value>(?s:^.*$)</value>
+        </property>
+        <property>
+          <name>Replacement Value</name>
+          <value>${omarmetadata}</value>
+        </property>
+        <property>
+          <name>Character Set</name>
+          <value>UTF-8</value>
+        </property>
+        <property>
+          <name>Maximum Buffer Size</name>
+          <value>1 MB</value>
+        </property>
+        <property>
+          <name>Replacement Strategy</name>
+          <value>Always Replace</value>
+        </property>
+        <property>
+          <name>Evaluation Mode</name>
+          <value>Entire text</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>75a88e4f-0158-1000-b39b-861951bfc5a5</id>
+        <name>Remove Input File</name>
+        <position x="900.6255250549084" y="7936.283446598156"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Command Arguments</name>
+          <value>-f;${absolute.path}/${filename}</value>
+        </property>
+        <property>
+          <name>Command Path</name>
+          <value>rm</value>
+        </property>
+        <property>
+          <name>Ignore STDIN</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Working Directory</name>
+        </property>
+        <property>
+          <name>Argument Delimiter</name>
+          <value>;</value>
+        </property>
+        <property>
+          <name>Output Destination Attribute</name>
+        </property>
+        <property>
+          <name>Max Attribute Length</name>
+          <value>256</value>
+        </property>
+        <autoTerminatedRelationship>output stream</autoTerminatedRelationship>
+        <autoTerminatedRelationship>original</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581029-d53e-17bf-060c-a2b867cf2fd2</id>
+        <name>ReplaceText</name>
+        <position x="962.7147735684794" y="3479.1947319659002"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ReplaceText</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Regular Expression</name>
+          <value>(?s:^.*$)</value>
+        </property>
+        <property>
+          <name>Replacement Value</name>
+          <value>insert into raster_file (id, version, format, name, raster_data_set_id, type) values (${raster_file_id}, 0, 'image', '${absolute.path}${filename}', ${raster_data_set_id}, 'main');</value>
+        </property>
+        <property>
+          <name>Character Set</name>
+          <value>UTF-8</value>
+        </property>
+        <property>
+          <name>Maximum Buffer Size</name>
+          <value>1 MB</value>
+        </property>
+        <property>
+          <name>Replacement Strategy</name>
+          <value>Regex Replace</value>
+        </property>
+        <property>
+          <name>Evaluation Mode</name>
+          <value>Entire text</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>0158101e-d53e-17bf-6d62-6855cdb06305</id>
+        <name>ReplaceText</name>
+        <position x="987.6106245647304" y="2806.470372610606"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ReplaceText</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Regular Expression</name>
+          <value>(?s:^.*$)</value>
+        </property>
+        <property>
+          <name>Replacement Value</name>
+          <value>insert into raster_data_set  (id, version, repository_id) values (${raster_data_set_id}, 0, 0);</value>
+        </property>
+        <property>
+          <name>Character Set</name>
+          <value>UTF-8</value>
+        </property>
+        <property>
+          <name>Maximum Buffer Size</name>
+          <value>1 MB</value>
+        </property>
+        <property>
+          <name>Replacement Strategy</name>
+          <value>Regex Replace</value>
+        </property>
+        <property>
+          <name>Evaluation Mode</name>
+          <value>Entire text</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>07bfd53f-0158-1000-8cf6-240cac9762ff</id>
+        <name>LogAttribute</name>
+        <position x="901.3530579266962" y="7701.7642584045025"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <processor>
+        <id>0158101a-d53e-17bf-ec27-2826d9260797</id>
+        <name>EvaluateJsonPath</name>
+        <position x="948.3806632774081" y="5786.2949131559835"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.EvaluateJsonPath</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Destination</name>
+          <value>flowfile-attribute</value>
+        </property>
+        <property>
+          <name>Return Type</name>
+          <value>auto-detect</value>
+        </property>
+        <property>
+          <name>Path Not Found Behavior</name>
+          <value>ignore</value>
+        </property>
+        <property>
+          <name>Null Value Representation</name>
+          <value>empty string</value>
+        </property>
+        <property>
+          <name>raster_entry_id</name>
+          <value>raster_entry_id</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+        <autoTerminatedRelationship>unmatched</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>07bfd53d-0158-1000-e4ba-a5ba0f32ed37</id>
+        <name>ListFile</name>
+        <position x="1049.9471741376337" y="-328.78015993045847"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ListFile</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Input Directory</name>
+          <value>/data/ingest-test</value>
+        </property>
+        <property>
+          <name>Recurse Subdirectories</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Input Directory Location</name>
+          <value>Local</value>
+        </property>
+        <property>
+          <name>File Filter</name>
+          <value>[^\.].*\.(ntf|nitf|NTF|NITF|jp2|sid|tif)</value>
+        </property>
+        <property>
+          <name>Path Filter</name>
+        </property>
+        <property>
+          <name>Minimum File Age</name>
+          <value>0 sec</value>
+        </property>
+        <property>
+          <name>Maximum File Age</name>
+        </property>
+        <property>
+          <name>Minimum File Size</name>
+          <value>0 B</value>
+        </property>
+        <property>
+          <name>Maximum File Size</name>
+        </property>
+        <property>
+          <name>Ignore Hidden Files</name>
+          <value>true</value>
+        </property>
+      </processor>
+      <processor>
+        <id>1d98a644-0158-1000-5271-01a5d52d010d</id>
+        <name>Global Params</name>
+        <position x="1045.8789889977088" y="-98.26807040409494"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.attributes.UpdateAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Delete Attributes Expression</name>
+        </property>
+        <property>
+          <name>thumbnailModulo</name>
+          <value>128</value>
+        </property>
+        <property>
+          <name>targetDir</name>
+          <value>/data/imagery-test</value>
+        </property>
+        <property>
+          <name>cacheDir</name>
+          <value>/data/omar-cache-test</value>
+        </property>
+      </processor>
+      <processor>
+        <id>01581000-0e49-1426-82b0-0d4a05b9ef52</id>
+        <name>RasterEntry Insert Statement</name>
+        <position x="901.7057181300875" y="7012.233646491322"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ReplaceText</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Regular Expression</name>
+          <value>(?s:^.*$)</value>
+        </property>
+        <property>
+          <name>Replacement Value</name>
+          <value>INSERT into raster_entry (id, version, raster_data_set_id, entry_id, index_id, width, height, number_of_bands, number_of_res_levels, bit_depth, data_type, gsdx, gsdy, gsd_unit, ground_geom, tie_point_set, filename, image_id, image_representation, product_id, be_number, mission_id, country_code, image_category, azimuth_angle, security_classification, title, organization, description, niirs, sun_elevation, sun_azimuth, cloud_cover, security_code, grazing_angle, class_name, acquisition_date, ingest_date, receive_date) values (${raster_file_id}, 0, ${raster_data_set_id}, '${entryId}', '${indexId}', ${width}, ${height}, ${number_of_bands:replaceEmpty(1)}, ${number_of_res_levels:replaceEmpty(1)}, ${bitDepth}, '${dataType}', ${gsdx}, ${gsdy}, 'meters', ST_GeomFromText('${groundGeom}', 4326), '${tiePoints}', '${filename}', '${imageId}', '${imageRepresentation}', '${productId}', '${beNumber}', '${missionId}', '${countryCode}', '${imageCategory}', ${azimuthAngle:replaceEmpty("null")}, '${securityClassification}', '${title}', '${organization}', '${description}', ${niirs:replaceEmpty("null")}, ${sun_elevation:replaceEmpty("null")}, ${sun_azimuth:replaceEmpty("null")}, ${cloud_cover:replaceEmpty("null")}, '${isctlh}', ${grazingAngle:replaceEmpty("null")}, '${className}', '${acquisitionDate}', current_timestamp, '${receiveDate}');</value>
+        </property>
+        <property>
+          <name>Character Set</name>
+          <value>UTF-8</value>
+        </property>
+        <property>
+          <name>Maximum Buffer Size</name>
+          <value>1 MB</value>
+        </property>
+        <property>
+          <name>Replacement Strategy</name>
+          <value>Regex Replace</value>
+        </property>
+        <property>
+          <name>Evaluation Mode</name>
+          <value>Entire text</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>0158100b-d53e-17bf-e6d9-7f6228dfe0c0</id>
+        <name>Write IDs to Attributes</name>
+        <position x="975.49557501654" y="2312.2571630675884"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.EvaluateJsonPath</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Destination</name>
+          <value>flowfile-attribute</value>
+        </property>
+        <property>
+          <name>Return Type</name>
+          <value>scalar</value>
+        </property>
+        <property>
+          <name>Path Not Found Behavior</name>
+          <value>ignore</value>
+        </property>
+        <property>
+          <name>Null Value Representation</name>
+          <value>empty string</value>
+        </property>
+        <property>
+          <name>raster_file_id</name>
+          <value>raster_file_id</value>
+        </property>
+        <property>
+          <name>raster_data_set_id</name>
+          <value>raster_data_set_id</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+        <autoTerminatedRelationship>unmatched</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581020-d53e-17bf-907f-7843360f79dc</id>
+        <name>PutSQL</name>
+        <position x="972.5722307364292" y="3252.9529750641263"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.PutSQL</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>JDBC Connection Pool</name>
+          <value>040bfcbe-0158-1000-af4f-397ec6553565</value>
+        </property>
+        <property>
+          <name>Support Fragmented Transactions</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Transaction Timeout</name>
+        </property>
+        <property>
+          <name>Batch Size</name>
+          <value>1</value>
+        </property>
+        <property>
+          <name>Obtain Generated Keys</name>
+          <value>false</value>
+        </property>
+        <autoTerminatedRelationship>retry</autoTerminatedRelationship>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581000-eb53-1428-ee4f-9924461f8929</id>
+        <name>Insert Raster Entry</name>
+        <position x="899.5868384466039" y="7471.400630582637"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.PutSQL</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>JDBC Connection Pool</name>
+          <value>040bfcbe-0158-1000-af4f-397ec6553565</value>
+        </property>
+        <property>
+          <name>Support Fragmented Transactions</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Transaction Timeout</name>
+        </property>
+        <property>
+          <name>Batch Size</name>
+          <value>1</value>
+        </property>
+        <property>
+          <name>Obtain Generated Keys</name>
+          <value>false</value>
+        </property>
+        <autoTerminatedRelationship>retry</autoTerminatedRelationship>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581004-d53b-17bf-4b72-347bcdef49cc</id>
+        <name>Get DateTime</name>
+        <position x="1003.9457530489844" y="552.0823196739052"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.EvaluateJsonPath</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Destination</name>
+          <value>flowfile-attribute</value>
+        </property>
+        <property>
+          <name>Return Type</name>
+          <value>auto-detect</value>
+        </property>
+        <property>
+          <name>Path Not Found Behavior</name>
+          <value>ignore</value>
+        </property>
+        <property>
+          <name>Null Value Representation</name>
+          <value>empty string</value>
+        </property>
+        <property>
+          <name>dateTime</name>
+          <value>$[0].acquisitionDate</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+        <autoTerminatedRelationship>unmatched</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581012-d53b-17bf-392a-2e9a203cf387</id>
+        <name>Create Thumbnail</name>
+        <position x="946.49410842828" y="6202.44705333922"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Command Arguments</name>
+          <value>${outputDir}/${filename};${thumbnailFile};128;${entryId}</value>
+        </property>
+        <property>
+          <name>Command Path</name>
+          <value>image-thumbnail</value>
+        </property>
+        <property>
+          <name>Ignore STDIN</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Working Directory</name>
+        </property>
+        <property>
+          <name>Argument Delimiter</name>
+          <value>;</value>
+        </property>
+        <property>
+          <name>Output Destination Attribute</name>
+        </property>
+        <property>
+          <name>Max Attribute Length</name>
+          <value>16384</value>
+        </property>
+        <autoTerminatedRelationship>original</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581000-d53b-17bf-b02e-050b3cd6ac6f</id>
+        <name>Copy to Archive</name>
+        <position x="982.854397588123" y="1145.7070079210998"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Command Arguments</name>
+          <value>if=${absolute.path}${filename};of=${outputDir}/${filename};bs=1M</value>
+        </property>
+        <property>
+          <name>Command Path</name>
+          <value>dd</value>
+        </property>
+        <property>
+          <name>Ignore STDIN</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Working Directory</name>
+        </property>
+        <property>
+          <name>Argument Delimiter</name>
+          <value>;</value>
+        </property>
+        <property>
+          <name>Output Destination Attribute</name>
+          <value>ddout</value>
+        </property>
+        <property>
+          <name>Max Attribute Length</name>
+          <value>16384</value>
+        </property>
+      </processor>
+      <processor>
+        <id>07bfd53e-0158-1000-0e16-f7a8c6ad8440</id>
+        <name>Get Metadata</name>
+        <position x="1023.8646546063837" y="88.8083563048931"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Command Arguments</name>
+          <value>${absolute.path}/${filename}</value>
+        </property>
+        <property>
+          <name>Command Path</name>
+          <value>image-info</value>
+        </property>
+        <property>
+          <name>Ignore STDIN</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Working Directory</name>
+        </property>
+        <property>
+          <name>Argument Delimiter</name>
+          <value>;</value>
+        </property>
+        <property>
+          <name>Output Destination Attribute</name>
+          <value>omarmetadata</value>
+        </property>
+        <property>
+          <name>Max Attribute Length</name>
+          <value>1000000</value>
+        </property>
+      </processor>
+      <processor>
+        <id>01581018-d53e-17bf-e50a-771e3cc56baf</id>
+        <name>ConvertAvroToJSON</name>
+        <position x="956.4041645275838" y="5555.340276580896"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.avro.ConvertAvroToJSON</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>JSON container options</name>
+          <value>array</value>
+        </property>
+        <property>
+          <name>Wrap Single Record</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Avro schema</name>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>07bfd53c-0158-1000-f42e-134314740259</id>
+        <name>Create Histogram</name>
+        <position x="963.0685120282587" y="5126.877478619346"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Command Arguments</name>
+          <value>--entry;${entryId};--create-histogram-fast;${outputDir}/${filename}</value>
+        </property>
+        <property>
+          <name>Command Path</name>
+          <value>ossim-create-histo</value>
+        </property>
+        <property>
+          <name>Ignore STDIN</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Working Directory</name>
+        </property>
+        <property>
+          <name>Argument Delimiter</name>
+          <value>;</value>
+        </property>
+        <property>
+          <name>Output Destination Attribute</name>
+          <value>histoout</value>
+        </property>
+        <property>
+          <name>Max Attribute Length</name>
+          <value>16384</value>
+        </property>
+      </processor>
+      <processor>
+        <id>01581000-1184-1408-6308-0de07ede52e9</id>
+        <name>Get raster_data_set_id raster_file_id</name>
+        <position x="976.4122784678405" y="1594.9375604652637"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteSQL</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Database Connection Pooling Service</name>
+          <value>040bfcbe-0158-1000-af4f-397ec6553565</value>
+        </property>
+        <property>
+          <name>SQL select query</name>
+          <value>select nextval('raster_data_set_id_seq') as raster_data_set_id, nextval('raster_file_id_seq') as raster_file_id</value>
+        </property>
+        <property>
+          <name>Max Wait Time</name>
+          <value>0 seconds</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>07bfd53b-0158-1000-bfa7-978b22756a2f</id>
+        <name>create overviews</name>
+        <position x="961.8188782391962" y="4937.561469097862"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Command Arguments</name>
+          <value>-np;8;ossim-img2rr;-e;${entryId};-t;ossim_kakadu_nitf_j2k;${outputDir}/${filename}</value>
+        </property>
+        <property>
+          <name>Command Path</name>
+          <value>mpirun</value>
+        </property>
+        <property>
+          <name>Ignore STDIN</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Working Directory</name>
+        </property>
+        <property>
+          <name>Argument Delimiter</name>
+          <value>;</value>
+        </property>
+        <property>
+          <name>Output Destination Attribute</name>
+          <value>overviewout</value>
+        </property>
+        <property>
+          <name>Max Attribute Length</name>
+          <value>16384</value>
+        </property>
+      </processor>
+      <processor>
+        <id>01581023-d53e-17bf-0651-2f777e4ea0b1</id>
+        <name>LogAttribute</name>
+        <position x="952.8004739657426" y="4020.652624692031"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <processor>
+        <id>01581006-d53b-17bf-bb81-5e6186b11f42</id>
+        <name>Get Output Path</name>
+        <position x="992.5902952668935" y="747.1853415476548"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.attributes.UpdateAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Delete Attributes Expression</name>
+        </property>
+        <property>
+          <name>outputDir</name>
+          <value>${targetDir}/${dateTime:substring(0,4)}/${dateTime:substring(5,7)}/${dateTime:substring(8,10)}</value>
+        </property>
+      </processor>
+      <processor>
+        <id>0158100c-d53b-17bf-7526-e4ad7a1932f9</id>
+        <name>Get Fields for Hash</name>
+        <position x="900.2133853158246" y="6558.275418870389"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ReplaceText</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Regular Expression</name>
+          <value>(?s:^.*$)</value>
+        </property>
+        <property>
+          <name>Replacement Value</name>
+          <value>${filename}:${entryId}</value>
+        </property>
+        <property>
+          <name>Character Set</name>
+          <value>UTF-8</value>
+        </property>
+        <property>
+          <name>Maximum Buffer Size</name>
+          <value>1 MB</value>
+        </property>
+        <property>
+          <name>Replacement Strategy</name>
+          <value>Always Replace</value>
+        </property>
+        <property>
+          <name>Evaluation Mode</name>
+          <value>Entire text</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>8a0dd729-0158-1000-d8a5-dbb624f72b3a</id>
+        <name>Write Metadata To Flow File Again</name>
+        <position x="946.7445058112603" y="4294.880353565276"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ReplaceText</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Regular Expression</name>
+          <value>(?s:^.*$)</value>
+        </property>
+        <property>
+          <name>Replacement Value</name>
+          <value>${omarmetadata}</value>
+        </property>
+        <property>
+          <name>Character Set</name>
+          <value>UTF-8</value>
+        </property>
+        <property>
+          <name>Maximum Buffer Size</name>
+          <value>1 MB</value>
+        </property>
+        <property>
+          <name>Replacement Strategy</name>
+          <value>Always Replace</value>
+        </property>
+        <property>
+          <name>Evaluation Mode</name>
+          <value>Entire text</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>07bfd541-0158-1000-79b3-2b160b1632f2</id>
+        <name>Split Image Entries</name>
+        <position x="932.54196173529" y="4504.29440977169"/>
+        <styles/>
+        <comment>$.* is supposed to split a json root array according to stackoverflow</comment>
+        <class>org.apache.nifi.processors.standard.SplitJson</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>JsonPath Expression</name>
+          <value>$.*</value>
+        </property>
+        <property>
+          <name>Null Value Representation</name>
+          <value>empty string</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+        <autoTerminatedRelationship>original</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>0158102c-d53e-17bf-56bc-9a8f55478a6a</id>
+        <name>PutSQL</name>
+        <position x="955.7377581347525" y="3736.728678327755"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.PutSQL</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>JDBC Connection Pool</name>
+          <value>040bfcbe-0158-1000-af4f-397ec6553565</value>
+        </property>
+        <property>
+          <name>Support Fragmented Transactions</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Transaction Timeout</name>
+        </property>
+        <property>
+          <name>Batch Size</name>
+          <value>1</value>
+        </property>
+        <property>
+          <name>Obtain Generated Keys</name>
+          <value>false</value>
+        </property>
+        <autoTerminatedRelationship>retry</autoTerminatedRelationship>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>07bfd540-0158-1000-b3d9-1ef17a5ac37e</id>
+        <name>Write Metadata to Attibutes</name>
+        <position x="946.93551642279" y="4714.17526914669"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.EvaluateJsonPath</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Destination</name>
+          <value>flowfile-attribute</value>
+        </property>
+        <property>
+          <name>Return Type</name>
+          <value>scalar</value>
+        </property>
+        <property>
+          <name>Path Not Found Behavior</name>
+          <value>ignore</value>
+        </property>
+        <property>
+          <name>Null Value Representation</name>
+          <value>the string 'null'</value>
+        </property>
+        <property>
+          <name>className</name>
+          <value>className</value>
+        </property>
+        <property>
+          <name>entryId</name>
+          <value>entryId</value>
+        </property>
+        <property>
+          <name>sunElevation</name>
+          <value>sunElevation</value>
+        </property>
+        <property>
+          <name>niirs</name>
+          <value>niirs</value>
+        </property>
+        <property>
+          <name>missionId</name>
+          <value>missionId</value>
+        </property>
+        <property>
+          <name>cloudCover</name>
+          <value>cloudCover</value>
+        </property>
+        <property>
+          <name>securityClassification</name>
+          <value>securityClassification</value>
+        </property>
+        <property>
+          <name>acquisitionDate</name>
+          <value>acquisitionDate</value>
+        </property>
+        <property>
+          <name>bitDepth</name>
+          <value>bitDepth</value>
+        </property>
+        <property>
+          <name>isctlh</name>
+          <value>isctlh</value>
+        </property>
+        <property>
+          <name>tiePoints</name>
+          <value>tiePoints</value>
+        </property>
+        <property>
+          <name>sunAzimuth</name>
+          <value>sunAzimuth</value>
+        </property>
+        <property>
+          <name>countryCode</name>
+          <value>countryCode</value>
+        </property>
+        <property>
+          <name>width</name>
+          <value>width</value>
+        </property>
+        <property>
+          <name>imageRepresentation</name>
+          <value>imageRepresentation</value>
+        </property>
+        <property>
+          <name>beNumber</name>
+          <value>beNumber</value>
+        </property>
+        <property>
+          <name>organization</name>
+          <value>organization</value>
+        </property>
+        <property>
+          <name>groundGeom</name>
+          <value>groundGeom</value>
+        </property>
+        <property>
+          <name>numberOfBands</name>
+          <value>numberOfBands</value>
+        </property>
+        <property>
+          <name>gsdy</name>
+          <value>gsdy</value>
+        </property>
+        <property>
+          <name>numberOfResLevels</name>
+          <value>numberOfResLevels</value>
+        </property>
+        <property>
+          <name>height</name>
+          <value>height</value>
+        </property>
+        <property>
+          <name>grazingAngle</name>
+          <value>grazingAngle</value>
+        </property>
+        <property>
+          <name>shadowAngle</name>
+          <value>shadowAngle</value>
+        </property>
+        <property>
+          <name>imageCategory</name>
+          <value>imageCategory</value>
+        </property>
+        <property>
+          <name>description</name>
+          <value>description</value>
+        </property>
+        <property>
+          <name>dataType</name>
+          <value>dataType</value>
+        </property>
+        <property>
+          <name>productId</name>
+          <value>productId</value>
+        </property>
+        <property>
+          <name>gsdx</name>
+          <value>gsdx</value>
+        </property>
+        <property>
+          <name>title</name>
+          <value>title</value>
+        </property>
+        <property>
+          <name>imageId</name>
+          <value>imageId</value>
+        </property>
+        <property>
+          <name>entryName</name>
+          <value>entryName</value>
+        </property>
+        <property>
+          <name>azimuthAngle</name>
+          <value>azimuthAngle</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+        <autoTerminatedRelationship>unmatched</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581009-d53e-17bf-0b86-2a19ed7b3715</id>
+        <name>ConvertAvroToJSON</name>
+        <position x="963.8077088056025" y="1833.4496069152447"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.avro.ConvertAvroToJSON</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>JSON container options</name>
+          <value>array</value>
+        </property>
+        <property>
+          <name>Wrap Single Record</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Avro schema</name>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01581010-d53b-17bf-0da6-169647368aae</id>
+        <name>Get Thumbnail Filepath</name>
+        <position x="946.9592555214249" y="5997.321205451964"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.attributes.UpdateAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Delete Attributes Expression</name>
+        </property>
+        <property>
+          <name>receiveDate</name>
+          <value>${file.lastModifiedTime:substring(0,19)}</value>
+        </property>
+        <property>
+          <name>thumbnailFile</name>
+          <value>${cacheDir}/${raster_entry_id}-128-imagespace.jpg</value>
+        </property>
+      </processor>
+      <processor>
+        <id>01581001-b129-1429-f64e-d877338e57cf</id>
+        <name>LogAttribute</name>
+        <position x="983.0124817548212" y="2581.9593725402447"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <processor>
+        <id>01581031-d53e-17bf-d18b-8d52c3f92274</id>
+        <name>LogAttribute</name>
+        <position x="980.7405933520793" y="3024.083920022601"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <processor>
+        <id>01581011-d53e-17bf-3cf2-b1eb7cf18a62</id>
+        <name>LogAttribute</name>
+        <position x="971.9659119306025" y="2067.4613256652447"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <processor>
+        <id>11841408-1000-1158-13c9-87aa32068a71</id>
+        <name>ExecuteSQL</name>
+        <position x="959.2465981713246" y="5338.366102236234"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteSQL</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Database Connection Pooling Service</name>
+          <value>040bfcbe-0158-1000-af4f-397ec6553565</value>
+        </property>
+        <property>
+          <name>SQL select query</name>
+          <value>select nextval('raster_entry_id_seq') as raster_entry_id</value>
+        </property>
+        <property>
+          <name>Max Wait Time</name>
+          <value>0 seconds</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>0158100a-d53b-17bf-fe4e-66e61cd70292</id>
+        <name>HashContent</name>
+        <position x="898.3525912042535" y="6787.587621927517"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.HashContent</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Hash Attribute Name</name>
+          <value>indexId</value>
+        </property>
+        <property>
+          <name>Hash Algorithm</name>
+          <value>SHA-1</value>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>f62fc4b4-0158-1000-9196-015eae7014d1</id>
+        <name>LogAttribute</name>
+        <position x="922.7078931099431" y="6372.826818060645"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <processor>
+        <id>01581019-d53b-17bf-a9f6-06a8c652fdc8</id>
+        <name>Make Output Dir</name>
+        <position x="989.8380305100227" y="943.4587622283352"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Command Arguments</name>
+          <value>-p;${outputDir}</value>
+        </property>
+        <property>
+          <name>Command Path</name>
+          <value>mkdir</value>
+        </property>
+        <property>
+          <name>Ignore STDIN</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>Working Directory</name>
+        </property>
+        <property>
+          <name>Argument Delimiter</name>
+          <value>;</value>
+        </property>
+        <property>
+          <name>Output Destination Attribute</name>
+          <value>mkdirout</value>
+        </property>
+        <property>
+          <name>Max Attribute Length</name>
+          <value>16384</value>
+        </property>
+      </processor>
+      <processor>
+        <id>01581036-d53e-17bf-79e9-17470c337df2</id>
+        <name>LogAttribute</name>
+        <position x="902.6896635867186" y="7245.20200282923"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.standard.LogAttribute</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Log Level</name>
+          <value>info</value>
+        </property>
+        <property>
+          <name>Log Payload</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>Attributes to Log</name>
+        </property>
+        <property>
+          <name>Attributes to Ignore</name>
+        </property>
+        <property>
+          <name>Log prefix</name>
+        </property>
+      </processor>
+      <connection>
+        <id>f65d5e4a-0158-1000-7f22-86081cf1a810</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>07bfd53c-0158-1000-f42e-134314740259</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>11841408-1000-1158-13c9-87aa32068a71</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>original</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581000-b129-1429-699b-c4744d8a2476</id>
+        <name/>
+        <bendPoints>
+          <bendPoint x="1094.03759765625" y="7565.3681640625"/>
+        </bendPoints>
+        <labelIndex>0</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581000-eb53-1428-ee4f-9924461f8929</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>07bfd53f-0158-1000-8cf6-240cac9762ff</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158100a-d53e-17bf-27af-28648ddc2a1f</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581000-1184-1408-6308-0de07ede52e9</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581009-d53e-17bf-0b86-2a19ed7b3715</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158100e-d53b-17bf-8f2d-cf8443d5f711</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158100c-d53b-17bf-7526-e4ad7a1932f9</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>0158100a-d53b-17bf-fe4e-66e61cd70292</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>8a0f8774-0158-1000-c59c-43f8a3c573f4</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581023-d53e-17bf-0651-2f777e4ea0b1</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>8a0dd729-0158-1000-d8a5-dbb624f72b3a</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>89e1020a-0158-1000-889e-8a0992c17964</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581006-d53b-17bf-bb81-5e6186b11f42</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581019-d53b-17bf-a9f6-06a8c652fdc8</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581034-d53e-17bf-8559-294002c7af48</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581031-d53e-17bf-d18b-8d52c3f92274</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581020-d53e-17bf-907f-7843360f79dc</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158101b-d53e-17bf-3824-7b30ea08770a</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>11841408-1000-1158-13c9-87aa32068a71</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581018-d53e-17bf-e50a-771e3cc56baf</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>f65e8e3c-0158-1000-9030-ea1a74109b91</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>f62fc4b4-0158-1000-9196-015eae7014d1</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>0158100c-d53b-17bf-7526-e4ad7a1932f9</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581037-d53e-17bf-8c58-f239664f77b7</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581000-0e49-1426-82b0-0d4a05b9ef52</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581036-d53e-17bf-79e9-17470c337df2</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>f65dd2ea-0158-1000-67e7-17e0dcd1e3cb</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158101a-d53e-17bf-ec27-2826d9260797</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581010-d53b-17bf-0da6-169647368aae</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>matched</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>1d9d850b-0158-1000-e4f9-c8e5a01e8097</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>07bfd53d-0158-1000-e4ba-a5ba0f32ed37</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>1d98a644-0158-1000-5271-01a5d52d010d</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158102f-d53e-17bf-6092-de9733732ae5</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158102c-d53e-17bf-56bc-9a8f55478a6a</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581023-d53e-17bf-0651-2f777e4ea0b1</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>f65d3067-0158-1000-fb6c-9b99f1dd824c</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581012-d53b-17bf-392a-2e9a203cf387</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>f62fc4b4-0158-1000-9196-015eae7014d1</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>output stream</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158102d-d53e-17bf-4f15-7d0dc1959592</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581029-d53e-17bf-060c-a2b867cf2fd2</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>0158102c-d53e-17bf-56bc-9a8f55478a6a</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158101b-d53b-17bf-6db7-5bb65385e21a</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581019-d53b-17bf-a9f6-06a8c652fdc8</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581000-d53b-17bf-b02e-050b3cd6ac6f</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>original</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158102a-d53e-17bf-0129-64f7b727907a</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581020-d53e-17bf-907f-7843360f79dc</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581029-d53e-17bf-060c-a2b867cf2fd2</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158100e-d53e-17bf-f33b-2c19cd9b9c7a</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158100b-d53e-17bf-e6d9-7f6228dfe0c0</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581001-b129-1429-f64e-d877338e57cf</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>matched</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158100f-d53b-17bf-ab35-663b7f47a841</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158100a-d53b-17bf-fe4e-66e61cd70292</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581000-0e49-1426-82b0-0d4a05b9ef52</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>89e3181c-0158-1000-bd52-80050abb2130</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581001-b129-1429-f64e-d877338e57cf</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>0158101e-d53e-17bf-6d62-6855cdb06305</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>89dc18fe-0158-1000-06a1-4cbc7f18b50d</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>1d98a644-0158-1000-5271-01a5d52d010d</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>07bfd53e-0158-1000-0e16-f7a8c6ad8440</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581013-d53e-17bf-5e95-d2e7de3e2b13</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581011-d53e-17bf-3cf2-b1eb7cf18a62</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>0158100b-d53e-17bf-e6d9-7f6228dfe0c0</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>89dbeb74-0158-1000-d884-1f0898047349</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581005-b129-1429-0f2d-ae7bdc464f72</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581000-1184-1408-6308-0de07ede52e9</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>75a5ff02-0158-1000-ac47-b2f51c3c20f2</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>07bfd540-0158-1000-b3d9-1ef17a5ac37e</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>07bfd53b-0158-1000-bfa7-978b22756a2f</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>matched</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581014-d53b-17bf-e333-4349afec3826</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581010-d53b-17bf-0da6-169647368aae</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581012-d53b-17bf-392a-2e9a203cf387</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>89e20065-0158-1000-695d-0dafc3d68ce8</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581000-d53b-17bf-b02e-050b3cd6ac6f</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581005-b129-1429-0f2d-ae7bdc464f72</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>original</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581033-d53e-17bf-e462-b36135a7c82f</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158101e-d53e-17bf-6d62-6855cdb06305</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581031-d53e-17bf-d18b-8d52c3f92274</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581038-d53e-17bf-9aa7-c250f0f4f245</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581036-d53e-17bf-79e9-17470c337df2</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581000-eb53-1428-ee4f-9924461f8929</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>8a0a6145-0158-1000-6611-c3f15ccea4d9</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>07bfd53e-0158-1000-0e16-f7a8c6ad8440</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>8a084144-0158-1000-2882-e5235518a188</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>original</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581015-d53e-17bf-131f-8cde2f2167a3</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>07bfd541-0158-1000-79b3-2b160b1632f2</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>07bfd540-0158-1000-b3d9-1ef17a5ac37e</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>split</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>8a0fa0c9-0158-1000-7630-1803e9778ea8</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>8a0dd729-0158-1000-d8a5-dbb624f72b3a</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>07bfd541-0158-1000-79b3-2b160b1632f2</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>8a0a7e5f-0158-1000-ef47-db6452358ceb</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>8a084144-0158-1000-2882-e5235518a188</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581004-d53b-17bf-4b72-347bcdef49cc</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>75a8adc3-0158-1000-9854-0d6ccf671106</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>07bfd53f-0158-1000-8cf6-240cac9762ff</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>75a88e4f-0158-1000-b39b-861951bfc5a5</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>0158101c-d53e-17bf-66c0-673abb151ed0</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581018-d53e-17bf-e50a-771e3cc56baf</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>0158101a-d53e-17bf-ec27-2826d9260797</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581012-d53e-17bf-4e09-bb34df395f57</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581009-d53e-17bf-0b86-2a19ed7b3715</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581011-d53e-17bf-3cf2-b1eb7cf18a62</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581001-eb53-1428-91de-9a1c24f4ec8b</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>07bfd53b-0158-1000-bfa7-978b22756a2f</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>07bfd53c-0158-1000-f42e-134314740259</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>original</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>01581007-d53b-17bf-6ba0-5092c4ac2d3f</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581004-d53b-17bf-4b72-347bcdef49cc</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581006-d53b-17bf-bb81-5e6186b11f42</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>matched</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+    </processGroup>
+    <controllerService>
+      <id>040bfcbe-0158-1000-af4f-397ec6553565</id>
+      <name>DBCPConnectionPool</name>
+      <comment/>
+      <class>org.apache.nifi.dbcp.DBCPConnectionPool</class>
+      <enabled>true</enabled>
+      <property>
+        <name>Database Connection URL</name>
+        <value>jdbc:postgresql:omardb-1.9.0-prod</value>
+      </property>
+      <property>
+        <name>Database Driver Class Name</name>
+        <value>org.postgresql.Driver</value>
+      </property>
+      <property>
+        <name>database-driver-locations</name>
+      </property>
+      <property>
+        <name>Database User</name>
+        <value>postgres</value>
+      </property>
+      <property>
+        <name>Password</name>
+        <value>enc{0162E12010CE6F9025E75CAA1BF849F2EFCAE40D6B9F63EB09E83EAABC36C0C2}</value>
+      </property>
+      <property>
+        <name>Max Wait Time</name>
+        <value>500 millis</value>
+      </property>
+      <property>
+        <name>Max Total Connections</name>
+        <value>8</value>
+      </property>
+    </controllerService>
+  </rootGroup>
+  <controllerServices>
+    <controllerService>
+      <id>040a1ada-0158-1000-7dfd-4a47806803ec</id>
+      <name>DBCPConnectionPool</name>
+      <comment/>
+      <class>org.apache.nifi.dbcp.DBCPConnectionPool</class>
+      <enabled>true</enabled>
+      <property>
+        <name>Database Connection URL</name>
+        <value>jdbc:postgresql://localhost/omardb-1.9.0-prod</value>
+      </property>
+      <property>
+        <name>Database Driver Class Name</name>
+        <value>org.postgresql.Driver</value>
+      </property>
+      <property>
+        <name>database-driver-locations</name>
+        <value>/data/software/nifi/nifi-1.0.0/lib/postgresql-9.3-1103-jdbc41.jar</value>
+      </property>
+      <property>
+        <name>Database User</name>
+        <value>postgres</value>
+      </property>
+      <property>
+        <name>Password</name>
+        <value>enc{82AC7A6692F37EA8647F964FA345ED31E6F4E30198FF764FD881669FEB390EFB}</value>
+      </property>
+      <property>
+        <name>Max Wait Time</name>
+        <value>500 millis</value>
+      </property>
+      <property>
+        <name>Max Total Connections</name>
+        <value>8</value>
+      </property>
+    </controllerService>
+  </controllerServices>
+  <reportingTasks/>
+</flowController>
