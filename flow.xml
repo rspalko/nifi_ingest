@@ -10,7 +10,7 @@
     <processGroup>
       <id>07bdcf92-0158-1000-5d49-6c1d582ad17c</id>
       <name>Imagery Ingest</name>
-      <position x="2479.5499972321786" y="443.4276497192368"/>
+      <position x="2728.5499972321786" y="480.4276497192368"/>
       <comment/>
       <processor>
         <id>01581005-b129-1429-0f2d-ae7bdc464f72</id>
@@ -155,7 +155,7 @@
         </property>
         <property>
           <name>Replacement Value</name>
-          <value>insert into raster_file (id, version, format, name, raster_data_set_id, type) values (${raster_file_id}, 0, 'image', '${absolute.path}${filename}', ${raster_data_set_id}, 'main');</value>
+          <value>insert into raster_file (id, version, format, name, raster_data_set_id, type) values (${raster_file_id}, 0, 'image', '${outputDir}/${filename}', ${raster_data_set_id}, 'main');</value>
         </property>
         <property>
           <name>Character Set</name>
@@ -459,7 +459,7 @@
       <processor>
         <id>01581000-0e49-1426-82b0-0d4a05b9ef52</id>
         <name>RasterEntry Insert Statement</name>
-        <position x="901.7057181300875" y="7012.233646491322"/>
+        <position x="894.7286673488375" y="7135.494876960072"/>
         <styles/>
         <comment/>
         <class>org.apache.nifi.processors.standard.ReplaceText</class>
@@ -478,7 +478,7 @@
         </property>
         <property>
           <name>Replacement Value</name>
-          <value>INSERT into raster_entry (id, version, raster_data_set_id, entry_id, index_id, width, height, number_of_bands, number_of_res_levels, bit_depth, data_type, gsdx, gsdy, gsd_unit, ground_geom, tie_point_set, filename, image_id, image_representation, product_id, be_number, mission_id, country_code, image_category, azimuth_angle, security_classification, title, organization, description, niirs, sun_elevation, sun_azimuth, cloud_cover, security_code, grazing_angle, class_name, acquisition_date, ingest_date, receive_date) values (${raster_entry_id}, 0, ${raster_data_set_id}, '${entryId}', '${indexId}', ${width}, ${height}, ${number_of_bands:replaceEmpty(1)}, ${number_of_res_levels:replaceEmpty(1)}, ${bitDepth}, '${dataType}', ${gsdx}, ${gsdy}, 'meters', ST_GeomFromText('${groundGeom}', 4326), '${tiePoints}', '${filename}', '${imageId}', '${imageRepresentation}', '${productId}', '${beNumber}', '${missionId}', '${countryCode}', '${imageCategory}', ${azimuthAngle:replaceEmpty("null")}, '${securityClassification}', '${title}', '${organization}', '${description}', ${niirs:replaceEmpty("null")}, ${sun_elevation:replaceEmpty("null")}, ${sun_azimuth:replaceEmpty("null")}, ${cloud_cover:replaceEmpty("null")}, '${isctlh}', ${grazingAngle:replaceEmpty("null")}, '${className}', '${acquisitionDate}', current_timestamp, '${receiveDate}');</value>
+          <value>INSERT into raster_entry (id, version, raster_data_set_id, entry_id, index_id, width, height, number_of_bands, number_of_res_levels, bit_depth, data_type, gsdx, gsdy, gsd_unit, ground_geom, tie_point_set, filename, image_id, image_representation, product_id, be_number, mission_id, country_code, image_category, azimuth_angle, security_classification, title, organization, description, niirs, sun_elevation, sun_azimuth, cloud_cover, security_code, grazing_angle, class_name, acquisition_date, ingest_date, receive_date) values (${raster_entry_id}, 0, ${raster_data_set_id}, '${entryId}', '${indexId}', ${width}, ${height}, ${number_of_bands:replaceEmpty(1)}, ${number_of_res_levels:replaceEmpty(1)}, ${bitDepth}, '${dataType}', ${gsdx}, ${gsdy}, 'meters', ST_GeomFromText('${groundGeom}', 4326), '${tiePoints}', '${outputDir}/${filename}', '${imageId}', '${imageRepresentation}', '${productId}', '${beNumber}', '${missionId}', '${countryCode}', '${imageCategory}', ${azimuthAngle:replaceEmpty("null")}, '${securityClassification}', '${title}', '${organization}', '${description}', ${niirs:replaceEmpty("null")}, ${sun_elevation:replaceEmpty("null")}, ${sun_azimuth:replaceEmpty("null")}, ${cloud_cover:replaceEmpty("null")}, '${isctlh}', ${grazingAngle:replaceEmpty("null")}, '${className}', '${acquisitionDate}', current_timestamp, '${receiveDate}');</value>
         </property>
         <property>
           <name>Character Set</name>
@@ -582,7 +582,7 @@
       <processor>
         <id>01581000-eb53-1428-ee4f-9924461f8929</id>
         <name>Insert Raster Entry</name>
-        <position x="899.5868384466039" y="7471.400630582637"/>
+        <position x="896.0983130559789" y="7505.122798551387"/>
         <styles/>
         <comment/>
         <class>org.apache.nifi.processors.standard.PutSQL</class>
@@ -1105,6 +1105,50 @@
         <autoTerminatedRelationship>original</autoTerminatedRelationship>
       </processor>
       <processor>
+        <id>18b6cc62-0159-1000-4c0f-8744712e041a</id>
+        <name>Precompute Number of RSETs</name>
+        <position x="893.6191342247275" y="6953.953942876678"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.script.ExecuteScript</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Script Engine</name>
+          <value>Groovy</value>
+        </property>
+        <property>
+          <name>Script File</name>
+        </property>
+        <property>
+          <name>Script Body</name>
+          <value>def flowFile = session.get()
+if(!flowFile) return
+def width = flowFile.getAttribute("width") as Integer
+def height = flowFile.getAttribute("height") as Integer
+def max = Math.max(width, height)
+def rset = 0
+while (max &gt; 256)
+{
+   max /= 2
+   rset++
+}
+flowFile = session.putAttribute(flowFile, 'number_of_res_levels', (rset as String))
+session.transfer(flowFile, REL_SUCCESS)</value>
+        </property>
+        <property>
+          <name>Module Directory</name>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
+      </processor>
+      <processor>
         <id>0158102c-d53e-17bf-56bc-9a8f55478a6a</id>
         <name>PutSQL</name>
         <position x="955.7377581347525" y="3736.728678327755"/>
@@ -1183,16 +1227,16 @@
           <value>entryId</value>
         </property>
         <property>
-          <name>missionId</name>
-          <value>missionId</value>
+          <name>sunElevation</name>
+          <value>sunElevation</value>
         </property>
         <property>
           <name>niirs</name>
           <value>niirs</value>
         </property>
         <property>
-          <name>sunElevation</name>
-          <value>sunElevation</value>
+          <name>missionId</name>
+          <value>missionId</value>
         </property>
         <property>
           <name>cloudCover</name>
@@ -1643,7 +1687,7 @@
       <processor>
         <id>01581036-d53e-17bf-79e9-17470c337df2</id>
         <name>LogAttribute</name>
-        <position x="902.6896635867186" y="7245.20200282923"/>
+        <position x="894.5497710085936" y="7334.74057704798"/>
         <styles/>
         <comment/>
         <class>org.apache.nifi.processors.standard.LogAttribute</class>
@@ -1998,6 +2042,23 @@
         <flowFileExpiration>0 sec</flowFileExpiration>
       </connection>
       <connection>
+        <id>18c6f936-0159-1000-eb43-aff4c1502260</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>18b6cc62-0159-1000-4c0f-8744712e041a</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581000-0e49-1426-82b0-0d4a05b9ef52</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
         <id>0158102a-d53e-17bf-0129-64f7b727907a</id>
         <name/>
         <bendPoints/>
@@ -2027,23 +2088,6 @@
         <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
         <destinationType>PROCESSOR</destinationType>
         <relationship>matched</relationship>
-        <maxWorkQueueSize>10000</maxWorkQueueSize>
-        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
-        <flowFileExpiration>0 sec</flowFileExpiration>
-      </connection>
-      <connection>
-        <id>0158100f-d53b-17bf-ab35-663b7f47a841</id>
-        <name/>
-        <bendPoints/>
-        <labelIndex>1</labelIndex>
-        <zIndex>0</zIndex>
-        <sourceId>0158100a-d53b-17bf-fe4e-66e61cd70292</sourceId>
-        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
-        <sourceType>PROCESSOR</sourceType>
-        <destinationId>01581000-0e49-1426-82b0-0d4a05b9ef52</destinationId>
-        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
-        <destinationType>PROCESSOR</destinationType>
-        <relationship>success</relationship>
         <maxWorkQueueSize>10000</maxWorkQueueSize>
         <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
         <flowFileExpiration>0 sec</flowFileExpiration>
@@ -2304,6 +2348,23 @@
         <flowFileExpiration>0 sec</flowFileExpiration>
       </connection>
       <connection>
+        <id>18c6d49d-0159-1000-8234-df50caeaa262</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158100a-d53b-17bf-fe4e-66e61cd70292</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>18b6cc62-0159-1000-4c0f-8744712e041a</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
         <id>01581012-d53e-17bf-4e09-bb34df395f57</id>
         <name/>
         <bendPoints/>
@@ -2378,7 +2439,7 @@
       </property>
       <property>
         <name>Password</name>
-        <value>enc{67014C10E2989ADCC5F4F5E0C485130F21E5E0A5EBFE50D927B686CD8F1772C6}</value>
+        <value>enc{DB0A7D7FB1EB2B390EC01D8CB34C8162D26A911596DE8D52D9A4E4E7582DDC6B}</value>
       </property>
       <property>
         <name>Max Wait Time</name>
@@ -2415,7 +2476,7 @@
       </property>
       <property>
         <name>Password</name>
-        <value>enc{C653EBBAD2DEF82C21DA72478D4563C44439A30BB7CF9F4F1B3F80CFCB89BE92}</value>
+        <value>enc{856EF491A6BD1CCE162E2A154E399B3FE8E0B97F8829FCC8E9C4C5283F1B2F81}</value>
       </property>
       <property>
         <name>Max Wait Time</name>
