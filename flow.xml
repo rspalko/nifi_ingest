@@ -10,7 +10,7 @@
     <processGroup>
       <id>07bdcf92-0158-1000-5d49-6c1d582ad17c</id>
       <name>Imagery Ingest</name>
-      <position x="2728.5499972321786" y="480.4276497192368"/>
+      <position x="3057.5499972321786" y="474.4276497192368"/>
       <comment/>
       <processor>
         <id>01581005-b129-1429-0f2d-ae7bdc464f72</id>
@@ -410,6 +410,10 @@
           <name>Delete Attributes Expression</name>
         </property>
         <property>
+          <name>noDateDir</name>
+          <value>undated</value>
+        </property>
+        <property>
           <name>thumbnailModulo</name>
           <value>128</value>
         </property>
@@ -478,7 +482,7 @@
         </property>
         <property>
           <name>Replacement Value</name>
-          <value>INSERT into raster_entry (id, version, raster_data_set_id, entry_id, index_id, width, height, number_of_bands, number_of_res_levels, bit_depth, data_type, gsdx, gsdy, gsd_unit, ground_geom, tie_point_set, filename, image_id, image_representation, product_id, be_number, mission_id, country_code, image_category, azimuth_angle, security_classification, title, organization, description, niirs, sun_elevation, sun_azimuth, cloud_cover, security_code, grazing_angle, class_name, acquisition_date, ingest_date, receive_date) values (${raster_entry_id}, 0, ${raster_data_set_id}, '${entryId}', '${indexId}', ${width}, ${height}, ${number_of_bands:replaceEmpty(1)}, ${number_of_res_levels:replaceEmpty(1)}, ${bitDepth}, '${dataType}', ${gsdx}, ${gsdy}, 'meters', ST_GeomFromText('${groundGeom}', 4326), '${tiePoints}', '${outputDir}/${filename}', '${imageId}', '${imageRepresentation}', '${productId}', '${beNumber}', '${missionId}', '${countryCode}', '${imageCategory}', ${azimuthAngle:replaceEmpty("null")}, '${securityClassification}', '${title}', '${organization}', '${description}', ${niirs:replaceEmpty("null")}, ${sun_elevation:replaceEmpty("null")}, ${sun_azimuth:replaceEmpty("null")}, ${cloud_cover:replaceEmpty("null")}, '${isctlh}', ${grazingAngle:replaceEmpty("null")}, '${className}', '${acquisitionDate}', current_timestamp, '${receiveDate}');</value>
+          <value>INSERT into raster_entry (id, version, raster_data_set_id, entry_id, index_id, width, height, number_of_bands, number_of_res_levels, bit_depth, data_type, gsdx, gsdy, gsd_unit, ground_geom, tie_point_set, filename, image_id, image_representation, product_id, be_number, mission_id, country_code, image_category, azimuth_angle, security_classification, title, organization, description, niirs, sun_elevation, sun_azimuth, cloud_cover, security_code, grazing_angle, class_name, acquisition_date, ingest_date, receive_date) values (${raster_entry_id}, 0, ${raster_data_set_id}, '${entryId}', '${indexId}', ${width}, ${height}, ${number_of_bands:replaceEmpty(1)}, ${number_of_res_levels:replaceEmpty(1)}, ${bitDepth}, '${dataType}', ${gsdx}, ${gsdy}, 'meters', ST_GeomFromText('${groundGeom}', 4326), '${tiePoints}', '${outputDir}/${filename}', '${imageId}', '${imageRepresentation}', '${productId}', '${beNumber}', '${missionId}', '${countryCode}', '${imageCategory}', ${azimuthAngle:replaceEmpty("null")}, '${securityClassification}', '${title}', '${organization}', '${description}', ${niirs:replaceEmpty("null")}, ${sun_elevation:replaceEmpty("null")}, ${sun_azimuth:replaceEmpty("null")}, ${cloud_cover:replaceEmpty("null")}, '${isctlh}', ${grazingAngle:replaceEmpty("null")}, '${className}', ${acquisitionDate:replaceEmpty("placeholder"):prepend("'"):append("'"):replace("'placeholder'", "null")}, current_timestamp, '${receiveDate}');</value>
         </property>
         <property>
           <name>Character Set</name>
@@ -540,6 +544,48 @@
         </property>
         <autoTerminatedRelationship>failure</autoTerminatedRelationship>
         <autoTerminatedRelationship>unmatched</autoTerminatedRelationship>
+      </processor>
+      <processor>
+        <id>01591000-cc62-18b6-1d36-23266631cab3</id>
+        <name>Get Output Path</name>
+        <position x="996.1818498990244" y="743.485869017086"/>
+        <styles/>
+        <comment/>
+        <class>org.apache.nifi.processors.script.ExecuteScript</class>
+        <maxConcurrentTasks>1</maxConcurrentTasks>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <penalizationPeriod>30 sec</penalizationPeriod>
+        <yieldPeriod>1 sec</yieldPeriod>
+        <bulletinLevel>WARN</bulletinLevel>
+        <lossTolerant>false</lossTolerant>
+        <scheduledState>RUNNING</scheduledState>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <runDurationNanos>0</runDurationNanos>
+        <property>
+          <name>Script Engine</name>
+          <value>Groovy</value>
+        </property>
+        <property>
+          <name>Script File</name>
+        </property>
+        <property>
+          <name>Script Body</name>
+          <value>def flowFile = session.get()
+if(!flowFile) return
+def dateTime = flowFile.getAttribute("dateTime") as String
+def targetDir = flowFile.getAttribute("targetDir") as String
+def noDateDir = flowFile.getAttribute("noDateDir") as String
+def outputDir = targetDir
+if (!dateTime || dateTime.size() &lt; 10 ) outputDir += "/" + noDateDir
+else outputDir += "/" + dateTime.substring(0,4) + "/" + dateTime.substring(5,7) + "/" + dateTime.substring(8,10)
+
+flowFile = session.putAttribute(flowFile, 'outputDir', outputDir)
+session.transfer(flowFile, REL_SUCCESS)</value>
+        </property>
+        <property>
+          <name>Module Directory</name>
+        </property>
+        <autoTerminatedRelationship>failure</autoTerminatedRelationship>
       </processor>
       <processor>
         <id>01581020-d53e-17bf-907f-7843360f79dc</id>
@@ -967,30 +1013,6 @@
         </property>
         <property>
           <name>Log prefix</name>
-        </property>
-      </processor>
-      <processor>
-        <id>01581006-d53b-17bf-bb81-5e6186b11f42</id>
-        <name>Get Output Path</name>
-        <position x="992.5902952668935" y="747.1853415476548"/>
-        <styles/>
-        <comment/>
-        <class>org.apache.nifi.processors.attributes.UpdateAttribute</class>
-        <maxConcurrentTasks>1</maxConcurrentTasks>
-        <schedulingPeriod>0 sec</schedulingPeriod>
-        <penalizationPeriod>30 sec</penalizationPeriod>
-        <yieldPeriod>1 sec</yieldPeriod>
-        <bulletinLevel>WARN</bulletinLevel>
-        <lossTolerant>false</lossTolerant>
-        <scheduledState>RUNNING</scheduledState>
-        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
-        <runDurationNanos>0</runDurationNanos>
-        <property>
-          <name>Delete Attributes Expression</name>
-        </property>
-        <property>
-          <name>outputDir</name>
-          <value>${targetDir}/${dateTime:substring(0,4)}/${dateTime:substring(5,7)}/${dateTime:substring(8,10)}</value>
         </property>
       </processor>
       <processor>
@@ -1643,7 +1665,7 @@ session.transfer(flowFile, REL_SUCCESS)</value>
       <processor>
         <id>01581019-d53b-17bf-a9f6-06a8c652fdc8</id>
         <name>Make Output Dir</name>
-        <position x="989.8380305100227" y="943.4587622283352"/>
+        <position x="989.8380305100227" y="942.2959204314602"/>
         <styles/>
         <comment/>
         <class>org.apache.nifi.processors.standard.ExecuteStreamCommand</class>
@@ -1718,6 +1740,23 @@ session.transfer(flowFile, REL_SUCCESS)</value>
           <name>Log prefix</name>
         </property>
       </processor>
+      <connection>
+        <id>6097381f-0159-1000-e88a-a6596476343c</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581029-d53e-17bf-060c-a2b867cf2fd2</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>0158102c-d53e-17bf-56bc-9a8f55478a6a</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
       <connection>
         <id>f65d5e4a-0158-1000-7f22-86081cf1a810</id>
         <name/>
@@ -1830,23 +1869,6 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
         <sourceType>PROCESSOR</sourceType>
         <destinationId>8a0dd729-0158-1000-d8a5-dbb624f72b3a</destinationId>
-        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
-        <destinationType>PROCESSOR</destinationType>
-        <relationship>success</relationship>
-        <maxWorkQueueSize>10000</maxWorkQueueSize>
-        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
-        <flowFileExpiration>0 sec</flowFileExpiration>
-      </connection>
-      <connection>
-        <id>89e1020a-0158-1000-889e-8a0992c17964</id>
-        <name/>
-        <bendPoints/>
-        <labelIndex>1</labelIndex>
-        <zIndex>0</zIndex>
-        <sourceId>01581006-d53b-17bf-bb81-5e6186b11f42</sourceId>
-        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
-        <sourceType>PROCESSOR</sourceType>
-        <destinationId>01581019-d53b-17bf-a9f6-06a8c652fdc8</destinationId>
         <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
         <destinationType>PROCESSOR</destinationType>
         <relationship>success</relationship>
@@ -1974,23 +1996,6 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         <flowFileExpiration>0 sec</flowFileExpiration>
       </connection>
       <connection>
-        <id>0158102f-d53e-17bf-6092-de9733732ae5</id>
-        <name/>
-        <bendPoints/>
-        <labelIndex>1</labelIndex>
-        <zIndex>0</zIndex>
-        <sourceId>0158102c-d53e-17bf-56bc-9a8f55478a6a</sourceId>
-        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
-        <sourceType>PROCESSOR</sourceType>
-        <destinationId>01581023-d53e-17bf-0651-2f777e4ea0b1</destinationId>
-        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
-        <destinationType>PROCESSOR</destinationType>
-        <relationship>success</relationship>
-        <maxWorkQueueSize>10000</maxWorkQueueSize>
-        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
-        <flowFileExpiration>0 sec</flowFileExpiration>
-      </connection>
-      <connection>
         <id>f65d3067-0158-1000-fb6c-9b99f1dd824c</id>
         <name/>
         <bendPoints/>
@@ -2003,23 +2008,6 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
         <destinationType>PROCESSOR</destinationType>
         <relationship>output stream</relationship>
-        <maxWorkQueueSize>10000</maxWorkQueueSize>
-        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
-        <flowFileExpiration>0 sec</flowFileExpiration>
-      </connection>
-      <connection>
-        <id>0158102d-d53e-17bf-4f15-7d0dc1959592</id>
-        <name/>
-        <bendPoints/>
-        <labelIndex>1</labelIndex>
-        <zIndex>0</zIndex>
-        <sourceId>01581029-d53e-17bf-060c-a2b867cf2fd2</sourceId>
-        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
-        <sourceType>PROCESSOR</sourceType>
-        <destinationId>0158102c-d53e-17bf-56bc-9a8f55478a6a</destinationId>
-        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
-        <destinationType>PROCESSOR</destinationType>
-        <relationship>success</relationship>
         <maxWorkQueueSize>10000</maxWorkQueueSize>
         <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
         <flowFileExpiration>0 sec</flowFileExpiration>
@@ -2195,6 +2183,23 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         <flowFileExpiration>0 sec</flowFileExpiration>
       </connection>
       <connection>
+        <id>01591002-cc62-18b6-fba0-73f69aae5128</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01581004-d53b-17bf-4b72-347bcdef49cc</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01591000-cc62-18b6-1d36-23266631cab3</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>matched</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
         <id>89e20065-0158-1000-695d-0dafc3d68ce8</id>
         <name/>
         <bendPoints/>
@@ -2258,6 +2263,23 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
         <destinationType>PROCESSOR</destinationType>
         <relationship>original</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
+        <id>609809e2-0159-1000-572e-465813f3125b</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>0158102c-d53e-17bf-56bc-9a8f55478a6a</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581023-d53e-17bf-0651-2f777e4ea0b1</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
         <maxWorkQueueSize>10000</maxWorkQueueSize>
         <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
         <flowFileExpiration>0 sec</flowFileExpiration>
@@ -2382,6 +2404,23 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         <flowFileExpiration>0 sec</flowFileExpiration>
       </connection>
       <connection>
+        <id>01591003-cc62-18b6-7731-fa69443f270a</id>
+        <name/>
+        <bendPoints/>
+        <labelIndex>1</labelIndex>
+        <zIndex>0</zIndex>
+        <sourceId>01591000-cc62-18b6-1d36-23266631cab3</sourceId>
+        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
+        <sourceType>PROCESSOR</sourceType>
+        <destinationId>01581019-d53b-17bf-a9f6-06a8c652fdc8</destinationId>
+        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
+        <destinationType>PROCESSOR</destinationType>
+        <relationship>success</relationship>
+        <maxWorkQueueSize>10000</maxWorkQueueSize>
+        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
+        <flowFileExpiration>0 sec</flowFileExpiration>
+      </connection>
+      <connection>
         <id>01581001-eb53-1428-91de-9a1c24f4ec8b</id>
         <name/>
         <bendPoints/>
@@ -2394,23 +2433,6 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
         <destinationType>PROCESSOR</destinationType>
         <relationship>original</relationship>
-        <maxWorkQueueSize>10000</maxWorkQueueSize>
-        <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
-        <flowFileExpiration>0 sec</flowFileExpiration>
-      </connection>
-      <connection>
-        <id>01581007-d53b-17bf-6ba0-5092c4ac2d3f</id>
-        <name/>
-        <bendPoints/>
-        <labelIndex>1</labelIndex>
-        <zIndex>0</zIndex>
-        <sourceId>01581004-d53b-17bf-4b72-347bcdef49cc</sourceId>
-        <sourceGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</sourceGroupId>
-        <sourceType>PROCESSOR</sourceType>
-        <destinationId>01581006-d53b-17bf-bb81-5e6186b11f42</destinationId>
-        <destinationGroupId>07bdcf92-0158-1000-5d49-6c1d582ad17c</destinationGroupId>
-        <destinationType>PROCESSOR</destinationType>
-        <relationship>matched</relationship>
         <maxWorkQueueSize>10000</maxWorkQueueSize>
         <maxWorkQueueDataSize>1 GB</maxWorkQueueDataSize>
         <flowFileExpiration>0 sec</flowFileExpiration>
@@ -2439,7 +2461,7 @@ session.transfer(flowFile, REL_SUCCESS)</value>
       </property>
       <property>
         <name>Password</name>
-        <value>enc{DB0A7D7FB1EB2B390EC01D8CB34C8162D26A911596DE8D52D9A4E4E7582DDC6B}</value>
+        <value>enc{45154678003B8814091F37EB905F81F8A9FD3AED6DAA3968B9EE70E8E6B9F126}</value>
       </property>
       <property>
         <name>Max Wait Time</name>
@@ -2476,7 +2498,7 @@ session.transfer(flowFile, REL_SUCCESS)</value>
       </property>
       <property>
         <name>Password</name>
-        <value>enc{856EF491A6BD1CCE162E2A154E399B3FE8E0B97F8829FCC8E9C4C5283F1B2F81}</value>
+        <value>enc{82D0268EF98F6ECDC653F993CCDC0B9185ADA18DAE8E87B577191F0A6C3766CF}</value>
       </property>
       <property>
         <name>Max Wait Time</name>
