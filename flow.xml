@@ -1249,16 +1249,16 @@ session.transfer(flowFile, REL_SUCCESS)</value>
           <value>entryId</value>
         </property>
         <property>
-          <name>sunElevation</name>
-          <value>sunElevation</value>
+          <name>missionId</name>
+          <value>missionId</value>
         </property>
         <property>
           <name>niirs</name>
           <value>niirs</value>
         </property>
         <property>
-          <name>missionId</name>
-          <value>missionId</value>
+          <name>sunElevation</name>
+          <value>sunElevation</value>
         </property>
         <property>
           <name>cloudCover</name>
@@ -1429,7 +1429,7 @@ session.transfer(flowFile, REL_SUCCESS)</value>
         </property>
         <property>
           <name>thumbnailFile</name>
-          <value>${cacheDir}/${thumbnailModulo}/${raster_entry_id}-128-imagespace.jpg</value>
+          <value>${cacheDir}/${raster_entry_id:mod(${thumbnailModulo})}/${raster_entry_id}-128-imagespace.jpg</value>
         </property>
       </processor>
       <processor>
@@ -2461,7 +2461,7 @@ session.transfer(flowFile, REL_SUCCESS)</value>
       </property>
       <property>
         <name>Password</name>
-        <value>enc{45154678003B8814091F37EB905F81F8A9FD3AED6DAA3968B9EE70E8E6B9F126}</value>
+        <value>enc{D880F22B706A84FDA866E8DD48841A4EAB19CF7171B6C6B04ECF9DEF1B97A130}</value>
       </property>
       <property>
         <name>Max Wait Time</name>
@@ -2498,7 +2498,7 @@ session.transfer(flowFile, REL_SUCCESS)</value>
       </property>
       <property>
         <name>Password</name>
-        <value>enc{82D0268EF98F6ECDC653F993CCDC0B9185ADA18DAE8E87B577191F0A6C3766CF}</value>
+        <value>enc{9C29AEF519EA734D937EBFBE9E88A5ABFCD12E4BB2DAD9FF834F69E061EB0373}</value>
       </property>
       <property>
         <name>Max Wait Time</name>
